@@ -1,0 +1,28 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: pycon-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pyconapp
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: pyconapp
+    spec:
+      containers:
+      - name: pyconcontainer
+        image: tarunpothulapati/pyconapp
+        ports:
+        - containerPort: 5000
+        env:
+          - name: NodeName
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: ContainerName
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name

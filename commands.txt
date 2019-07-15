@@ -1,0 +1,11 @@
+Kubectl apply -f k8s/pycon1.yaml
+
+kubectl expose deployment pycon-deployment  --port=80 --target-port=5000 --type=LoadBalancer
+
+
+//See the internal and external IP
+
+//Enable AutoScale
+kubectl autoscale deployment php-apache --cpu-percent=20 --min=1 --max=10
+kubectl run -i --tty load-generator --image=busybox /bin/sh
+while true; do wget -q -O- http://10.0.196.91/; done
